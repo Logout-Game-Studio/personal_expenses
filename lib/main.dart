@@ -13,8 +13,13 @@ class PersonalExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
-    );
+        home: HomePage(),
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(backgroundColor: Colors.blue.shade400),
+          primaryColor: Colors.blue.shade400,
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: Colors.greenAccent.shade400),
+        ));
   }
 }
 
