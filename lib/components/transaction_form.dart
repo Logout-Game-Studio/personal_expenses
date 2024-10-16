@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class TransactionForm extends StatelessWidget {
-  final tittleTextController = TextEditingController();
-  final valueTextController = TextEditingController();
+class TransactionForm extends StatefulWidget {
   final Function(String, double) onSubmit;
 
   TransactionForm({required this.onSubmit});
+
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  final tittleTextController = TextEditingController();
+
+  final valueTextController = TextEditingController();
 
   void _submit() {
     var tittle = tittleTextController.text;
     var value = double.tryParse(valueTextController.text) ?? 0.0;
     if (tittle.isNotEmpty) {
-      onSubmit(tittle, value);
+      widget.onSubmit(tittle, value);
     }
   }
 
@@ -39,14 +46,13 @@ class TransactionForm extends StatelessWidget {
               controller: valueTextController,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {
-                    _submit();
-                  },
-                  child: Icon(Icons.add_circle),
-                )
+                    onPressed: () {
+                      _submit();
+                    },
+                    child: Text("submit"))
               ],
             )
           ],
