@@ -15,7 +15,19 @@ class PersonalExpensesApp extends StatelessWidget {
     return MaterialApp(
         home: HomePage(),
         theme: ThemeData(
-          appBarTheme: AppBarTheme(backgroundColor: Colors.blue.shade400),
+          fontFamily: 'Ubuntu',
+          appBarTheme: AppBarTheme(
+              backgroundColor: Colors.blue.shade400,
+              titleTextStyle: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              )),
+          textTheme: TextTheme(
+            labelMedium: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           primaryColor: Colors.blue.shade400,
           floatingActionButtonTheme: FloatingActionButtonThemeData(
               backgroundColor: Colors.greenAccent.shade400),
