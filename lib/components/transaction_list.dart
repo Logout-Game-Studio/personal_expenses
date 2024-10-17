@@ -10,48 +10,64 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
-      child: ListView.builder(
-          itemCount: transactions.length,
-          itemBuilder: (ctx, idx) {
-            var t = transactions[idx];
-            return Card(
-              child: Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+        height: 300,
+        child: transactions.isNotEmpty
+            ? ListView.builder(
+                itemCount: transactions.length,
+                itemBuilder: (ctx, idx) {
+                  var t = transactions[idx];
+                  return Card(
+                    child: Row(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(ctx).primaryColor,
+                                width: 2,
+                              ),
+                            ),
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              "R\$ ${t.value.toStringAsFixed(2)}",
+                              style:
+                                  TextStyle(color: Theme.of(ctx).primaryColor),
+                            )),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              t.title,
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                            Text(
+                              DateFormat('d MMM y').format(t.date),
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 88, 88, 88),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                })
+            : Column(
                 children: [
+                  Text("No products available"),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(ctx).primaryColor,
-                          width: 2,
-                        ),
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "R\$ ${t.value.toStringAsFixed(2)}",
-                        style: TextStyle(color: Theme.of(ctx).primaryColor),
-                      )),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        t.title,
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      Text(
-                        DateFormat('d MMM y').format(t.date),
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 88, 88, 88),
-                        ),
-                      ),
-                    ],
+                    height: 100,
+                    child: Image.asset(
+                      "assets/images/conjunto-vazio.png",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ],
-              ),
-            );
-          }),
-    );
+              ));
   }
 }
