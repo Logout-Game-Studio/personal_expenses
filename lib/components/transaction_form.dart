@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final Function(String, double) onSubmit;
+  final Function(String, double, DateTime) onSubmit;
 
   TransactionForm({required this.onSubmit});
 
@@ -11,16 +12,30 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
-  final tittleTextController = TextEditingController();
-
-  final valueTextController = TextEditingController();
+  final _tittleTextController = TextEditingController();
+  final _valueTextController = TextEditingController();
+  DateTime? _selectedDate = null;
 
   void _submit() {
-    var tittle = tittleTextController.text;
-    var value = double.tryParse(valueTextController.text) ?? 0.0;
-    if (tittle.isNotEmpty) {
-      widget.onSubmit(tittle, value);
+    var tittle = _tittleTextController.text;
+    var value = double.tryParse(_valueTextController.text) ?? 0.0;
+    if (tittle.isNotEmpty && _selectedDate != null) {
+      widget.onSubmit(tittle, value, _selectedDate!);
     }
+  }
+
+  void _showDatePicker() {
+    showDatePicker(
+            context: context,
+            firstDate: DateTime(1900),
+            lastDate: DateTime.now())
+        .then((date) {
+      if (date != null) {
+        setState(() {
+          _selectedDate = date!;
+        });
+      }
+    });
   }
 
   @override
@@ -32,7 +47,7 @@ class _TransactionFormState extends State<TransactionForm> {
           children: [
             TextField(
               decoration: InputDecoration(labelText: 'Titulo'),
-              controller: tittleTextController,
+              controller: _tittleTextController,
               onSubmitted: (_) => _submit(),
             ),
             TextField(
@@ -43,16 +58,40 @@ class _TransactionFormState extends State<TransactionForm> {
               // inputFormatters: <TextInputFormatter>[
               //   FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[.,]')),
               // ],
-              controller: valueTextController,
+              controller: _valueTextController,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(_selectedDate == null
+                      ? 'No date informed!'
+                      : "Informed date: ${DateFormat('d/M/y').format(_selectedDate!)}"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    _showDatePicker();
+                  },
+                  child: Text(
+                    'selecionar data',
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
+                ElevatedButton(
+                    style: Theme.of(context).elevatedButtonTheme.style,
                     onPressed: () {
                       _submit();
                     },
-                    child: Text("submit"))
+                    child: Text(
+                      "submit",
+                      style: TextStyle(color: Colors.white),
+                    ))
               ],
             )
           ],
