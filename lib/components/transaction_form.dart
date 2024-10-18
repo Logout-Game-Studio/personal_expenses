@@ -47,13 +47,13 @@ class _TransactionFormState extends State<TransactionForm> {
           children: [
             SizedBox(height: 20),
             TextField(
-              decoration: InputDecoration(labelText: 'Titulo'),
+              decoration: InputDecoration(labelText: 'Tittle (name of the product)'),
               controller: _tittleTextController,
               onSubmitted: (_) => _submit(),
             ),
             SizedBox(height: 20),
             TextField(
-              decoration: InputDecoration(labelText: 'Valor (R\$)'),
+              decoration: InputDecoration(labelText: 'Value (\$)'),
               onSubmitted: (_) => _submit(),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               //TODO: filter the text input to accept only numeric numbers from keyboard
@@ -75,7 +75,7 @@ class _TransactionFormState extends State<TransactionForm> {
                     _showDatePicker();
                   },
                   child: Text(
-                    'selecionar data',
+                    'select date',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold),
