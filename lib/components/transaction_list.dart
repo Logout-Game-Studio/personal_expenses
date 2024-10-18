@@ -31,7 +31,7 @@ class TransactionList extends StatelessWidget {
                         backgroundColor: Theme.of(context).primaryColor,
                         child: Padding(
                             padding: const EdgeInsets.all(10),
-                            child: FittedBox(child: Text('R\$ ${t.value}'))),
+                            child: FittedBox(child: Text('\$ ${t.value}'))),
                       ),
                       trailing: IconButton(
                         color: Theme.of(context).colorScheme.error,
