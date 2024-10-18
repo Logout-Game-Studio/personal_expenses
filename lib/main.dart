@@ -41,7 +41,8 @@ class PersonalExpensesApp extends StatelessWidget {
           ),
           primaryColor: Colors.blue.shade400,
           floatingActionButtonTheme: FloatingActionButtonThemeData(
-              backgroundColor: Colors.greenAccent.shade400),
+              shape: CircleBorder(),
+              backgroundColor: Colors.blue.shade400),
         ));
   }
 }
@@ -52,32 +53,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-      id: "t1",
-      title: "shoes",
-      value: 30.0,
-      date: DateTime.now().subtract(Duration(days: 1)),
-    ),
-    Transaction(
-      id: "t2",
-      title: "super shoes",
-      value: 36.0,
-      date: DateTime.now().subtract(Duration(days: 2)),
-    ),
-    Transaction(
-      id: "t3",
-      title: "super shoes",
-      value: 36.0,
-      date: DateTime.now().subtract(Duration(days: 3)),
-    ),
-    Transaction(
-      id: "t4",
-      title: "super shoes",
-      value: 36.0,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-  ];
+  final List<Transaction> _transactions = [];
 
   ///Returns list of transactions made in the last seven days
   List<Transaction> get _recentTransactions {
