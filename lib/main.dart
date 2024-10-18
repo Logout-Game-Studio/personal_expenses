@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:personal_expenses/components/chart.dart';
 import 'package:personal_expenses/components/transaction_form.dart';
 import 'package:personal_expenses/components/transaction_list.dart';
 import 'package:personal_expenses/models/transaction.dart';
@@ -16,6 +17,16 @@ class PersonalExpensesApp extends StatelessWidget {
         home: HomePage(),
         theme: ThemeData(
           fontFamily: 'Ubuntu',
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue.shade400,
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           appBarTheme: AppBarTheme(
               backgroundColor: Colors.blue.shade400,
               titleTextStyle: TextStyle(
@@ -42,26 +53,47 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: "t1",
-    //   title: "shoes",
-    //   value: 30.0,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: "t2",
-    //   title: "super shoes",
-    //   value: 36.0,
-    //   date: DateTime.now(),
-    // ),
+    Transaction(
+      id: "t1",
+      title: "shoes",
+      value: 30.0,
+      date: DateTime.now().subtract(Duration(days: 1)),
+    ),
+    Transaction(
+      id: "t2",
+      title: "super shoes",
+      value: 36.0,
+      date: DateTime.now().subtract(Duration(days: 2)),
+    ),
+    Transaction(
+      id: "t3",
+      title: "super shoes",
+      value: 36.0,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: "t4",
+      title: "super shoes",
+      value: 36.0,
+      date: DateTime.now().subtract(Duration(days: 4)),
+    ),
   ];
 
-  void _AddTransaction(String tittle, double value) {
+  ///Returns list of transactions made in the last seven days
+  List<Transaction> get _recentTransactions {
+    return _transactions.where(
+      (t) {
+        return t.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+      },
+    ).toList();
+  }
+
+  void _AddTransaction(String tittle, double value, DateTime date) {
     final nTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: tittle,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
@@ -73,8 +105,8 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet(
         context: context,
         builder: (_) {
-          return TransactionForm(onSubmit: (t, v) {
-            _AddTransaction(t, v);
+          return TransactionForm(onSubmit: (t, v, d) {
+            _AddTransaction(t, v, d);
             Navigator.of(context).pop();
           });
         });
@@ -91,9 +123,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              child: Card(elevation: 5, child: Text("Gráficos")),
-            ),
+            Chart(transactions: _recentTransactions),
             TransactionList(transactions: _transactions),
           ],
         ),
