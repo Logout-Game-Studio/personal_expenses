@@ -45,11 +45,13 @@ class _TransactionFormState extends State<TransactionForm> {
         padding: EdgeInsets.all(10),
         child: Column(
           children: [
+            SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(labelText: 'Titulo'),
               controller: _tittleTextController,
               onSubmitted: (_) => _submit(),
             ),
+            SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(labelText: 'Valor (R\$)'),
               onSubmitted: (_) => _submit(),
@@ -60,6 +62,7 @@ class _TransactionFormState extends State<TransactionForm> {
               // ],
               controller: _valueTextController,
             ),
+            SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
@@ -80,6 +83,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 )
               ],
             ),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
