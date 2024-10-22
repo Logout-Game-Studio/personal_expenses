@@ -30,7 +30,7 @@ class PersonalExpensesApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
               backgroundColor: Colors.blue.shade400,
               titleTextStyle: TextStyle(
-                fontSize: 20,
+                fontSize: MediaQuery.of(context).textScaler.scale(20),
                 fontWeight: FontWeight.bold,
               )),
           textTheme: TextTheme(
@@ -41,8 +41,7 @@ class PersonalExpensesApp extends StatelessWidget {
           ),
           primaryColor: Colors.blue.shade400,
           floatingActionButtonTheme: FloatingActionButtonThemeData(
-              shape: CircleBorder(),
-              backgroundColor: Colors.blue.shade400),
+              shape: CircleBorder(), backgroundColor: Colors.blue.shade400),
         ));
   }
 }
@@ -53,7 +52,64 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Transaction> _transactions = [];
+  final List<Transaction> _transactions = [
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: "Sapato",
+      value: 20.0,
+      date: DateTime.now().subtract(
+        Duration(days: 3),
+      ),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: "Sapato 1",
+      value: 20.0,
+      date: DateTime.now().subtract(
+        Duration(days: 3),
+      ),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: "Sapato 2",
+      value: 20.0,
+      date: DateTime.now().subtract(
+        Duration(days: 2),
+      ),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: "Sapato 3",
+      value: 20.0,
+      date: DateTime.now().subtract(
+        Duration(days: 1),
+      ),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: "Sapato 4",
+      value: 20.0,
+      date: DateTime.now().subtract(
+        Duration(days: 3),
+      ),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: "Sapato 5",
+      value: 20.0,
+      date: DateTime.now().subtract(
+        Duration(days: 2),
+      ),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: "Sapato 6",
+      value: 20.0,
+      date: DateTime.now().subtract(
+        Duration(days: 2),
+      ),
+    ),
+  ];
 
   ///Returns list of transactions made in the last seven days
   List<Transaction> get _recentTransactions {
@@ -98,19 +154,29 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _appBar = AppBar(
+      title: Text("Personal Expenses"),
+    );
+    final _availableHeight = MediaQuery.of(context).size.height -
+        _appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Personal Expenses"),
-      ),
+      appBar: _appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Chart(transactions: _recentTransactions),
-            TransactionList(
-              transactions: _transactions,
-              onRemovePressed: _removeTransaction,
+            Container(
+                height: _availableHeight * 0.3,
+                child: Chart(transactions: _recentTransactions)),
+            Container(
+              height: _availableHeight * 0.7,
+              child: TransactionList(
+                transactions: _transactions,
+                onRemovePressed: _removeTransaction,
+              ),
             ),
           ],
         ),
